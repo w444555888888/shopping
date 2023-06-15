@@ -26,17 +26,17 @@ input {
   margin-left: 10px;
 }
 
-h1,h2,h3 {
+h1,
+h2,
+h3 {
   margin-left: 10px;
 }
 
-
-#checkout{
+#checkout {
   margin-left: 10px;
 }
 
-
-.total-price{
+.total-price {
   margin-left: 10px;
 }
 
@@ -45,15 +45,15 @@ img {
   height: 300px;
 }
 
-
-.window{
-   width: 1000px;
-   height: 300px;
-   background-color: rgb(189, 252, 62);
-   display: none;
+.window {
+  width: 1000px;
+  height: 200px;
+  background-color: yellow;
+  display: none;
+  list-style: none;
 }
 
-.pay{
+.pay {
   width: 100px;
   height: 50px;
   background-color: yellow;
