@@ -1,10 +1,3 @@
-{/* <li class="meal">
-          <img src="./hamberger.jpg" alt="餐點 3" style="width: 400px;height: 300px;">
-          <h3>漢堡</h3>
-          <h3>價格: $80</h3>
-          <input type="number" min="0" value="0">
-          <button class="add-to-cart">加入購物車</button>
-        </li> */}
 
         let goods = [
           {
@@ -12,18 +5,21 @@
             img: './franch-fries.jpg',
             food: '薯條',
             price: 50,
+            count: 0,
           },
           {
             id: 2,
             img: './hamberger.jpg',
             food: '漢堡',
-            price: 120
+            price: 120,
+            count: 0,
           },
           {
             id: 3,
             img: './coke.jpg',
             food: 'Coke',
-            price: 25
+            price: 25,
+            count: 0,
           }
         ]
         
@@ -34,12 +30,12 @@
         function page () {
           let total = ''
           goods.forEach(ele => {
-            total += `<li class="meal" data-uname=${ele.id}}>
+            total += `<li class="meal" data-uname=${ele.id}>
             <img src=${ele.img} alt="餐點 3" style="width: 400px;height: 300px;">
             <h3 class="food">${ele.food}</h3>
             <h3 class="price">價格:$${ele.price}</h3>
-            <input type="number" min="1" value="1">
-            <button class="add-to-cart">加入購物車</button>
+            <input class="count" type="number" min="0" value="${ele.count}">
+            <button class="add-to-cart" disabled="${ele.count == 0}">加入購物車</button>
           </li>`
           })
         
@@ -60,30 +56,20 @@
           let food = $(this).parent('.meal').find('.food').text()
           let price = $(this).parent('.meal').find('.price').text().slice(4)
           let count = $(this).parent('.meal').find('input').val()
-        
-        
-        
-        
-          console.log(empty)
-        
-        
-          let choose = empty.find(item => item.id === id)
-          if (choose) {
-            // 存在choose.count+新的count
-            choose.count = parseInt(choose.count) + parseInt(count)
-            
-          } else {
-            // 如果id不一樣就push
-            empty.push({
-              id: id,
-              food: food,
-              price: price,
-              count: count
-            })
-          }
-        
+
+          pushShoppingCart(id, food, price, count)
           renderCart()
-        
+        })
+
+        $('#meal-list').on('change', '.count', function () {
+          let count = $(this).val();
+          let btn   = $(this).parent('.meal').find('.add-to-cart');
+          
+          if (count > 0) {
+            btn.prop('disabled', false);
+          } else {
+            btn.prop('disabled', true);
+          }
         })
         
         function renderCart () {
@@ -101,6 +87,29 @@
           })
         
           $('.window').html(total)
+        }
+
+        function pushShoppingCart(id, food, price, count) {
+          if (empty.length == 0) {
+            empty.push({
+              id,
+              food,
+              price,
+              count
+            });
+          }
+
+          let hasGood = empty.findIndex(e => e.id == id);
+          if (hasGood >= 0) {
+            empty[hasGood].count = Number(empty[hasGood].count) + Number(count);
+          } else {
+            empty.push({
+              id,
+              food,
+              price,
+              count
+            });
+          }
         }
 
 
